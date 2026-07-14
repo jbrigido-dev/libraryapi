@@ -1,13 +1,9 @@
 package com.jbrigido.library.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,4 +36,7 @@ public class Book {
 
     @Column(nullable = false, length = 100)
     private String publisher;
+
+    @OneToMany(mappedBy = "book")
+    private List<BookAuthor> bookAuthors;
 }

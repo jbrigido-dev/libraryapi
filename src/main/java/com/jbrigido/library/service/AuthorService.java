@@ -4,7 +4,7 @@ import com.jbrigido.library.dto.AuthorRequestDTO;
 import com.jbrigido.library.dto.AuthorRequestUpdateDTO;
 import com.jbrigido.library.dto.AuthorResponseDTO;
 import com.jbrigido.library.entity.Author;
-import com.jbrigido.library.exception.ResourceNotFound;
+import com.jbrigido.library.exception.ResourceNotFoundException;
 import com.jbrigido.library.mapper.AuthorMapper;
 import com.jbrigido.library.repository.author.AuthorRepository;
 import org.springframework.stereotype.Service;
@@ -41,18 +41,22 @@ public class AuthorService {
         return dtos;
     }
 
-    public AuthorResponseDTO listById(Long id) throws ResourceNotFound {
-        Author author = repository.findById(id).orElseThrow(() -> new ResourceNotFound("Author not found"));
+    public AuthorResponseDTO listById(Long id) {
+        Author author = getAuthorOrThrowAnException(id);
         return mapper.toResponse(author);
     }
 
-    public void deleteById(Long id) throws ResourceNotFound {
-        Author author = repository.findById(id).orElseThrow(() -> new ResourceNotFound("Author not found"));
+    public void deleteById(Long id) {
+        Author author = getAuthorOrThrowAnException(id);
         repository.delete(author);
     }
 
-    public AuthorResponseDTO update(Long id, AuthorRequestUpdateDTO request) throws ResourceNotFound {
-        Author author = repository.findById(id).orElseThrow(() -> new ResourceNotFound("Author not found"));
+    public Author getAuthorOrThrowAnException(Long id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Author not found"));
+    }
+
+    public AuthorResponseDTO update(Long id, AuthorRequestUpdateDTO request) {
+        Author author =getAuthorOrThrowAnException(id);
 
         if (request.name() != null) {
             author.setName(request.name());
@@ -64,11 +68,11 @@ public class AuthorService {
         if (request.birthday() != null) {
             author.setBirthDate(request.birthday());
         }
-        if (request.nationality()!= null){
+        if (request.nationality() != null) {
             author.setNationality(request.nationality());
 
         }
-        Author authorUpdated =  repository.save(author);
+        Author authorUpdated = repository.save(author);
         return mapper.toResponse(authorUpdated);
     }
 

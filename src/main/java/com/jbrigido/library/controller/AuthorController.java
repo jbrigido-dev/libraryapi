@@ -3,7 +3,7 @@ package com.jbrigido.library.controller;
 import com.jbrigido.library.dto.AuthorRequestDTO;
 import com.jbrigido.library.dto.AuthorRequestUpdateDTO;
 import com.jbrigido.library.dto.AuthorResponseDTO;
-import com.jbrigido.library.exception.ResourceNotFound;
+import com.jbrigido.library.exception.ResourceNotFoundException;
 import com.jbrigido.library.service.AuthorService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -30,19 +30,19 @@ public class AuthorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AuthorResponseDTO> getById(@PathVariable Long id) throws ResourceNotFound {
+    public ResponseEntity<AuthorResponseDTO> getById(@PathVariable Long id){
         AuthorResponseDTO response = service.listById(id);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) throws ResourceNotFound {
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<AuthorResponseDTO> update(@PathVariable Long id, @RequestBody AuthorRequestUpdateDTO request) throws ResourceNotFound {
+    public ResponseEntity<AuthorResponseDTO> update(@PathVariable Long id, @RequestBody AuthorRequestUpdateDTO request) {
         AuthorResponseDTO response = service.update(id, request);
         return  ResponseEntity.status(HttpStatus.OK).body(response);
     }

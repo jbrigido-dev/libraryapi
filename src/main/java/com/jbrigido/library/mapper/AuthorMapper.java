@@ -1,6 +1,7 @@
 package com.jbrigido.library.mapper;
 
 import com.jbrigido.library.dto.AuthorRequestDTO;
+import com.jbrigido.library.dto.AuthorRequestUpdateDTO;
 import com.jbrigido.library.dto.AuthorResponseDTO;
 import com.jbrigido.library.entity.Author;
 import org.springframework.stereotype.Component;
@@ -17,8 +18,8 @@ public class AuthorMapper {
         return author;
     }
 
-    public AuthorResponseDTO toResponse(Author author){
-        return  new AuthorResponseDTO(
+    public AuthorResponseDTO toResponse(Author author) {
+        return new AuthorResponseDTO(
                 author.getId(),
                 author.getName(),
                 author.getLastName()

@@ -13,4 +13,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(IsbnAlreadyExistsException.class)
+    public ResponseEntity<String> isbnAlreadyExistsHandler(IsbnAlreadyExistsException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ListSizeException.class)
+    public ResponseEntity<String> listSizeException(ListSizeException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

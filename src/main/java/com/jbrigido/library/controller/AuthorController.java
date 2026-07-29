@@ -3,7 +3,6 @@ package com.jbrigido.library.controller;
 import com.jbrigido.library.dto.AuthorRequestDTO;
 import com.jbrigido.library.dto.AuthorRequestUpdateDTO;
 import com.jbrigido.library.dto.AuthorResponseDTO;
-import com.jbrigido.library.exception.ResourceNotFoundException;
 import com.jbrigido.library.service.AuthorService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

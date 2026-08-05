@@ -46,7 +46,7 @@ public class AuthorController {
         return  ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<AuthorResponseDTO> create(@Valid @RequestBody AuthorRequestDTO request) {
         AuthorResponseDTO created = service.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);

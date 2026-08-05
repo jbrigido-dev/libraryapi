@@ -1,6 +1,6 @@
 package com.jbrigido.library.service;
 
-import com.jbrigido.library.core.PassEnconder;
+import com.jbrigido.library.core.PassEncoder;
 import com.jbrigido.library.dto.UserRequestDTO;
 import com.jbrigido.library.entity.User;
 import com.jbrigido.library.exception.PasswordException;
@@ -17,10 +17,12 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository repository;
     private final UserMapper mapper;
+    private final PassEncoder encoder;
 
-    public UserService(UserRepository repository, UserMapper mapper) {
+    public UserService(UserRepository repository, UserMapper mapper, PassEncoder encoder) {
         this.repository = repository;
         this.mapper = mapper;
+        this.encoder = encoder;
     }
 
     @Override
@@ -36,7 +38,7 @@ public class UserService implements UserDetailsService {
         }
 
         User mapped = mapper.toEntity(request);
-        mapped.setPassword(PassEnconder.getEncoder().encode(mapped.getPassword()));
+        mapped.setPassword(encoder.getEncoder().encode(mapped.getPassword()));
 
         repository.save(mapped);
     }

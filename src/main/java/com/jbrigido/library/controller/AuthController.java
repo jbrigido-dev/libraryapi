@@ -20,7 +20,7 @@ public class AuthController {
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping("/signup")
     public ResponseEntity<Void> register(@RequestBody @Valid UserRequestDTO request){
         service.register(request);
         return ResponseEntity.noContent().build();

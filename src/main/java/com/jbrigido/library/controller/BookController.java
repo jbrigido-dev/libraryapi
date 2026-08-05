@@ -22,7 +22,7 @@ public class BookController {
         this.service = service;
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<BookResponseDTO> createBook(@Valid @RequestBody BookRequestDTO requestDTO) {
         BookResponseDTO response = service.createBook(requestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

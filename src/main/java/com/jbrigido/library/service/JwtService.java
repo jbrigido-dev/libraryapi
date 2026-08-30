@@ -19,12 +19,12 @@ public class JwtService {
     @Value("${jwt.time.expiration}")
     private long expiration;
 
-    private String generateToken(UserDetails user) {
+    public String generateToken(UserDetails user) {
 
         Date issued = new Date();
         Date expirationDate = new Date(issued.getTime() + expiration);
 
-        return Jwts.builder()
+        return "Bearer " + Jwts.builder()
                 .subject(user.getUsername())
                 .issuedAt(new Date())
                 .expiration(expirationDate)
@@ -38,7 +38,7 @@ public class JwtService {
         );
     }
 
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         SecretKey key = getSignInKey();
         return Jwts.parser().
                 decryptWith(key)
@@ -47,22 +47,22 @@ public class JwtService {
                 .getPayload();
     }
 
-    private String extractUsername(String token) {
+    public String extractUsername(String token) {
         Claims claims = extractAllClaims(token);
         return claims.getSubject();
     }
 
-    private Date extractExpiration(String token) {
+    public Date extractExpiration(String token) {
         Claims claims = extractAllClaims(token);
         return claims.getExpiration();
     }
 
     public boolean isValidToken(String token, UserDetails user) {
-            String username = extractUsername(token);
-            return user.getUsername().equals(username) && !isExpiredToken(token);
+        String username = extractUsername(token);
+        return user.getUsername().equals(username) && !isExpiredToken(token);
     }
 
-    private boolean isExpiredToken(String token) {
+    public boolean isExpiredToken(String token) {
         Date expiration = extractExpiration(token);
         return expiration.before(new Date());
     }

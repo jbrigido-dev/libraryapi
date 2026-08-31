@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Past;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,7 +27,7 @@ public class Author {
     @Column(nullable = false)
     private LocalDate birthDate;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String nationality;
 
     @OneToMany(mappedBy = "author")

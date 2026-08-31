@@ -1,9 +1,8 @@
 package com.jbrigido.library.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
-public record AuthorRequestDTO(@NotBlank String name, @NotBlank String lastname, @NotNull LocalDate birthday, @NotBlank String nationality) {
+public record AuthorRequestDTO(@NotBlank @Size(max = 100) String name, @NotBlank @Size(max = 100) String lastname, @NotNull @PastOrPresent LocalDate birthday, @NotBlank @Size(max = 50) String nationality) {
 }

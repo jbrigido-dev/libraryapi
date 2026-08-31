@@ -1,14 +1,11 @@
 package com.jbrigido.library.dto;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public record BookRequestDTO(@NotBlank String title, @NotBlank String isbn  , @Min(1) Integer edition,
-                             @NotBlank String language, @NotNull LocalDate publishDate, @NotBlank String publisher,
+public record BookRequestDTO(@NotBlank @Size(max = 200) String title, @Size(max = 13) String isbn  ,@NotNull @Min(value = 1) Integer edition,
+                             @NotBlank @Size(max = 50) String language, @NotNull @Past LocalDate publishDate, @NotBlank @Size(max = 100) String publisher,
                              @NotNull @Size(min = 1) List<Long> authors) {
 }

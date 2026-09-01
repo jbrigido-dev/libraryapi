@@ -41,7 +41,7 @@ public class BookController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<BookResponseDTO> updateBook(@PathVariable Long id, @RequestBody BookRequestUpdateDTO request) {
+    public ResponseEntity<BookResponseDTO> updateBook(@PathVariable Long id,@Valid @RequestBody BookRequestUpdateDTO request) {
         BookResponseDTO response = service.updateBook(request, id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

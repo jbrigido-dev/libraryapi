@@ -3,7 +3,6 @@ package com.jbrigido.library.service;
 import com.jbrigido.library.core.PassEncoder;
 import com.jbrigido.library.dto.UserRequestDTO;
 import com.jbrigido.library.entity.User;
-import com.jbrigido.library.exception.PasswordException;
 import com.jbrigido.library.exception.UserAlreadyExistsException;
 import com.jbrigido.library.mapper.UserMapper;
 import com.jbrigido.library.repository.user.UserRepository;
@@ -33,9 +32,6 @@ public class UserService implements UserDetailsService {
     public void register(UserRequestDTO request) {
         if (existByUsername(request.username()))
             throw new UserAlreadyExistsException("An User already exist with this username.");
-        if (request.password().length() < 8) {
-            throw new PasswordException("The password must have at least 8 characters");
-        }
 
         User mapped = mapper.toEntity(request);
         mapped.setPassword(encoder.getEncoder().encode(mapped.getPassword()));

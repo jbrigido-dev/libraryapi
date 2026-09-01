@@ -7,7 +7,6 @@ import com.jbrigido.library.dto.BookResponseDTO;
 import com.jbrigido.library.entity.Author;
 import com.jbrigido.library.entity.Book;
 import com.jbrigido.library.exception.IsbnAlreadyExistsException;
-import com.jbrigido.library.exception.ListSizeException;
 import com.jbrigido.library.exception.ResourceNotFoundException;
 import com.jbrigido.library.mapper.BookMapper;
 import com.jbrigido.library.repository.book.BookRepository;
@@ -37,8 +36,6 @@ public class BookService {
 
         existByIsbn(request.isbn());
 
-        isEmptyListAuthors(request.authors());
-
         List<Author> authors = getAuthors(request.authors());
 
         Book book = mapper.toEntity(request);
@@ -56,7 +53,7 @@ public class BookService {
 
         Book book = findById(id);
 
-        if (!request.isbn().equals(book.getIsbn())) {
+        if (request.isbn() != null && !request.isbn().equals(book.getIsbn())) {
             existByIsbn(request.isbn());
             book.setIsbn(request.isbn());
         }
@@ -66,9 +63,6 @@ public class BookService {
         }
         if (request.edition() != null) {
             book.setEdition(request.edition());
-        }
-        if (request.isbn() != null) {
-            book.setIsbn(request.isbn());
         }
         if (request.language() != null) {
             book.setLanguage(request.language());
@@ -81,7 +75,6 @@ public class BookService {
         }
 
         if (request.authors() != null) {
-            isEmptyListAuthors(request.authors());
 
             List<Author> authors = getAuthors(request.authors());
 
@@ -107,10 +100,6 @@ public class BookService {
             BookAuthorRequestDTO bookAuthorRequestDTO = new BookAuthorRequestDTO(book, author);
             bookAuthorService.save(bookAuthorRequestDTO);
         }
-    }
-
-    private void isEmptyListAuthors(List<Long> authors) {
-        if (authors.isEmpty()) throw new ListSizeException("Author list must have at least one author");
     }
 
     private void existByIsbn(String isbn) {

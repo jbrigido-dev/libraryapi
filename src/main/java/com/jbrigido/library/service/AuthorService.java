@@ -56,7 +56,7 @@ public class AuthorService {
     }
 
     public AuthorResponseDTO update(Long id, AuthorRequestUpdateDTO request) {
-        Author author =getAuthorOrThrowAnException(id);
+        Author author = getAuthorOrThrowAnException(id);
 
         if (request.name() != null) {
             author.setName(request.name());
